@@ -1,4 +1,16 @@
-# flutter-app-build Mini-Project
+# mini_project
 
-![image](https://user-images.githubusercontent.com/93393539/190893023-c64f6591-b1d2-4d59-944d-29bb14f624e8.png)
+A new Flutter project.
 
+## Getting Started
+
+This project is a starting point for a Flutter application.
+
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
