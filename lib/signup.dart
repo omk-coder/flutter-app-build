@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mini_project/signup.dart';
+import 'package:mini_project/login.dart';
 
 import 'customePageRoute.dart';
 
-class login extends StatelessWidget {
+class signup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +34,7 @@ class _MenuState extends State<Menu> {
         children: [
           Row(
             children: [
-              _menuItem(title: 'Sign In', isActive: true),
+              _menuItem(title: 'Sign up', isActive: true),
               _registerButton()
             ],
           ),
@@ -95,7 +95,7 @@ class _MenuState extends State<Menu> {
           style: ElevatedButton.styleFrom(
               primary: Color(0xff4169e1), elevation: 0),
           child: Text(
-            'Sign upoo',
+            'Sign In',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -103,7 +103,7 @@ class _MenuState extends State<Menu> {
           ),
           onPressed: () {
             Navigator.of(context).push(
-              CustomePageRoute(child: signup(), direction: AxisDirection.left),
+              CustomePageRoute(child: login(), direction: AxisDirection.right),
             );
           },
         ),
@@ -120,9 +120,9 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   TextEditingController emailController = TextEditingController();
   bool ishidepassword = true;
+  bool ishiderpassword = true;
   TextEditingController _password = TextEditingController();
-
-  void validateEmail() {}
+  TextEditingController _rpassword = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -135,17 +135,17 @@ class _BodyState extends State<Body> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Sign In to \nMy Application',
+                'Sign up to \nMy Application',
                 style: TextStyle(
                   fontSize: 45,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               SizedBox(
-                height: 30,
+                height: 20,
               ),
               Text(
-                "If you don't have an account",
+                "If you have an account",
                 style: TextStyle(
                     color: Colors.black54, fontWeight: FontWeight.bold),
               ),
@@ -166,7 +166,7 @@ class _BodyState extends State<Body> {
                     },
                     child: TextButton(
                       child: Text(
-                        "Register",
+                        "Login",
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -175,7 +175,7 @@ class _BodyState extends State<Body> {
                       onPressed: () {
                         Navigator.of(context).push(
                           CustomePageRoute(
-                              child: signup(), direction: AxisDirection.down),
+                              child: login(), direction: AxisDirection.up),
                         );
                       },
                     ),
@@ -228,7 +228,53 @@ class _BodyState extends State<Body> {
           ),
           autofillHints: [AutofillHints.email],
         ),
-        SizedBox(height: 30),
+        SizedBox(
+          height: 20,
+        ),
+        TextField(
+          decoration: InputDecoration(
+            hintText: 'Enter Your Name',
+            prefixIcon: Icon(
+              Icons.person,
+              color: Colors.blue,
+            ),
+            filled: true,
+            fillColor: Colors.blueGrey[50],
+            labelStyle: TextStyle(fontSize: 12),
+            contentPadding: EdgeInsets.only(left: 30),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.blueGrey),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.blueGrey),
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
+        ),
+        SizedBox(height: 20),
+        TextField(
+          decoration: InputDecoration(
+            hintText: 'Enter Restaurant Name',
+            prefixIcon: Icon(
+              Icons.business,
+              color: Colors.blue,
+            ),
+            filled: true,
+            fillColor: Colors.blueGrey[50],
+            labelStyle: TextStyle(fontSize: 12),
+            contentPadding: EdgeInsets.only(left: 30),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.blueGrey),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.blueGrey),
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
+        ),
+        SizedBox(height: 20),
         TextField(
           controller: _password,
           obscureText: ishidepassword,
@@ -242,6 +288,42 @@ class _BodyState extends State<Body> {
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
                 onTap: _visbalOrNot,
+                child: Icon(
+                  Icons.visibility_off_outlined,
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+            filled: true,
+            fillColor: Colors.blueGrey[50],
+            labelStyle: TextStyle(fontSize: 12),
+            contentPadding: EdgeInsets.only(left: 30),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.blueGrey),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.blueGrey),
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        TextField(
+          controller: _rpassword,
+          obscureText: ishiderpassword,
+          decoration: InputDecoration(
+            hintText: 'Conform Password',
+            prefixIcon: Icon(
+              Icons.password_outlined,
+              color: Colors.blue,
+            ),
+            suffixIcon: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: _rvisbalOrNot,
                 child: Icon(
                   Icons.visibility_off_outlined,
                   color: Colors.grey,
@@ -289,23 +371,7 @@ class _BodyState extends State<Body> {
                 width: double.infinity,
                 height: 50,
                 child: Center(child: Text("Sign In"))),
-            onPressed: () {
-              final bool isValid =
-                  EmailValidator.validate(emailController.text.trim());
-              if (isValid) {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return dialog("Done");
-                    });
-              } else {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return dialog("invalid User");
-                    });
-              }
-            },
+            onPressed: () {},
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
@@ -330,6 +396,7 @@ class _BodyState extends State<Body> {
   }
 
 //========================================snackBar===========================================================//
+
   void _visbalOrNot() {
     if (ishidepassword == true) {
       ishidepassword = false;
@@ -339,59 +406,12 @@ class _BodyState extends State<Body> {
     setState(() {});
   }
 
-  //ddld,ld,pld
-
-}
-
-class dialog extends StatelessWidget {
-  final title;
-  dialog(this.title);
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-      child: Container(
-        width: 400,
-        height: 200,
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(
-                color: Colors.white,
-                child: Icon(
-                  Icons.error,
-                  size: 60,
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                color: Color.fromARGB(255, 0, 214, 237),
-                child: SizedBox.expand(
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(children: [
-                      Text(
-                        title,
-                        style: TextStyle(color: Colors.red),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text("Okay"),
-                      )
-                    ]),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+  void _rvisbalOrNot() {
+    if (ishiderpassword == true) {
+      ishiderpassword = false;
+    } else {
+      ishiderpassword = true;
+    }
+    setState(() {});
   }
 }
