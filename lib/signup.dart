@@ -123,12 +123,15 @@ class _BodyState extends State<Body> {
   bool ishiderpassword = true;
   TextEditingController _password = TextEditingController();
   TextEditingController _rpassword = TextEditingController();
+  TextEditingController name = TextEditingController();
+  TextEditingController Compa_name = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        SizedBox(),
         Container(
           width: 360,
           child: Column(
@@ -142,7 +145,7 @@ class _BodyState extends State<Body> {
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 10,
               ),
               Text(
                 "If you have an account",
@@ -232,6 +235,7 @@ class _BodyState extends State<Body> {
           height: 20,
         ),
         TextField(
+          controller: name,
           decoration: InputDecoration(
             hintText: 'Enter Your Name',
             prefixIcon: Icon(
@@ -254,6 +258,7 @@ class _BodyState extends State<Body> {
         ),
         SizedBox(height: 20),
         TextField(
+          controller: Compa_name,
           decoration: InputDecoration(
             hintText: 'Enter Restaurant Name',
             prefixIcon: Icon(
@@ -371,7 +376,47 @@ class _BodyState extends State<Body> {
                 width: double.infinity,
                 height: 50,
                 child: Center(child: Text("Sign In"))),
-            onPressed: () {},
+            onPressed: () {
+              final bool isValide =
+                  EmailValidator.validate(emailController.text.trim());
+              if (!isValide) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return dialog("Invalid Email");
+                    });
+              } else if (_password.text.length < 8) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return dialog("Password Should 8 char");
+                    });
+              } else if (_password.text != _rpassword.text) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return dialog("Password not match");
+                    });
+              } else if (name.text.isEmpty) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return dialog("Name Should not empty");
+                    });
+              } else if (Compa_name.text.isEmpty) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return dialog("Password Should 8 char");
+                    });
+              } else {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return dialog("invalid ");
+                    });
+              }
+            },
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
@@ -413,5 +458,60 @@ class _BodyState extends State<Body> {
       ishiderpassword = true;
     }
     setState(() {});
+  }
+}
+
+class dialog extends StatelessWidget {
+  final title;
+
+  dialog(this.title);
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+      child: Container(
+        width: 400,
+        height: 200,
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                color: Colors.white,
+                child: Icon(
+                  Icons.sentiment_very_dissatisfied,
+                  size: 60,
+                  color: Colors.blue,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                color: Color.fromARGB(255, 0, 214, 237),
+                child: SizedBox.expand(
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Column(children: [
+                      Text(
+                        title,
+                        style: TextStyle(color: Colors.red),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text("Okay"),
+                      )
+                    ]),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
