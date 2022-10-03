@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mini_project/login.dart';
-import 'customePageRoute.dart';
-import 'package:mini_project/networkhandling/networkhandling.dart';
+import 'package:mini_project/signup.dart';
 
-class signup extends StatelessWidget {
+import 'customePageRoute.dart';
+
+class login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +34,7 @@ class _MenuState extends State<Menu> {
         children: [
           Row(
             children: [
-              _menuItem(title: 'Sign up', isActive: true),
+              _menuItem(title: 'Sign In', isActive: true),
               _registerButton()
             ],
           ),
@@ -95,7 +95,7 @@ class _MenuState extends State<Menu> {
           style: ElevatedButton.styleFrom(
               primary: Color(0xff4169e1), elevation: 0),
           child: Text(
-            'Sign In',
+            'Sign up',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -103,7 +103,7 @@ class _MenuState extends State<Menu> {
           ),
           onPressed: () {
             Navigator.of(context).push(
-              CustomePageRoute(child: login(), direction: AxisDirection.right),
+              CustomePageRoute(child: signup(), direction: AxisDirection.left),
             );
           },
         ),
@@ -119,43 +119,33 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   TextEditingController emailController = TextEditingController();
-  NetwokHandler netwokHandler = NetwokHandler();
-
   bool ishidepassword = true;
-  bool ishiderpassword = true;
   TextEditingController _password = TextEditingController();
-  TextEditingController _rpassword = TextEditingController();
-  TextEditingController name = TextEditingController();
-  TextEditingController Compa_name = TextEditingController();
 
-  var email = "";
-  var Name = "";
-  var Cname = "";
-  var Password = "";
+  void validateEmail() {}
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SizedBox(),
         Container(
           width: 360,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Sign up to \nMy Application',
+                'Sign In to \nMy Application',
                 style: TextStyle(
                   fontSize: 45,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               SizedBox(
-                height: 10,
+                height: 30,
               ),
               Text(
-                "If you have an account",
+                "If you don't have an account",
                 style: TextStyle(
                     color: Colors.black54, fontWeight: FontWeight.bold),
               ),
@@ -176,7 +166,7 @@ class _BodyState extends State<Body> {
                     },
                     child: TextButton(
                       child: Text(
-                        "Login",
+                        "Register",
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -185,7 +175,7 @@ class _BodyState extends State<Body> {
                       onPressed: () {
                         Navigator.of(context).push(
                           CustomePageRoute(
-                              child: login(), direction: AxisDirection.up),
+                              child: signup(), direction: AxisDirection.down),
                         );
                       },
                     ),
@@ -238,55 +228,7 @@ class _BodyState extends State<Body> {
           ),
           autofillHints: [AutofillHints.email],
         ),
-        SizedBox(
-          height: 20,
-        ),
-        TextField(
-          controller: name,
-          decoration: InputDecoration(
-            hintText: 'Enter Your Name',
-            prefixIcon: Icon(
-              Icons.person,
-              color: Colors.blue,
-            ),
-            filled: true,
-            fillColor: Colors.blueGrey[50],
-            labelStyle: TextStyle(fontSize: 12),
-            contentPadding: EdgeInsets.only(left: 30),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.blueGrey),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.blueGrey),
-              borderRadius: BorderRadius.circular(15),
-            ),
-          ),
-        ),
-        SizedBox(height: 20),
-        TextField(
-          controller: Compa_name,
-          decoration: InputDecoration(
-            hintText: 'Enter Restaurant Name',
-            prefixIcon: Icon(
-              Icons.business,
-              color: Colors.blue,
-            ),
-            filled: true,
-            fillColor: Colors.blueGrey[50],
-            labelStyle: TextStyle(fontSize: 12),
-            contentPadding: EdgeInsets.only(left: 30),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.blueGrey),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.blueGrey),
-              borderRadius: BorderRadius.circular(15),
-            ),
-          ),
-        ),
-        SizedBox(height: 20),
+        SizedBox(height: 30),
         TextField(
           controller: _password,
           obscureText: ishidepassword,
@@ -299,43 +241,14 @@ class _BodyState extends State<Body> {
             suffixIcon: MouseRegion(
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
-                onTap: _visbalOrNot,
-                child: Icon(
-                  Icons.visibility_off_outlined,
-                  color: Colors.grey,
-                ),
-              ),
-            ),
-            filled: true,
-            fillColor: Colors.blueGrey[50],
-            labelStyle: TextStyle(fontSize: 12),
-            contentPadding: EdgeInsets.only(left: 30),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.blueGrey),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.blueGrey),
-              borderRadius: BorderRadius.circular(15),
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        TextField(
-          controller: _rpassword,
-          obscureText: ishiderpassword,
-          decoration: InputDecoration(
-            hintText: 'Conform Password',
-            prefixIcon: Icon(
-              Icons.password_outlined,
-              color: Colors.blue,
-            ),
-            suffixIcon: MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: _rvisbalOrNot,
+                onTap: (() {
+                  if (ishidepassword == true) {
+                    ishidepassword = false;
+                  } else {
+                    ishidepassword = true;
+                  }
+                  setState(() {});
+                }),
                 child: Icon(
                   Icons.visibility_off_outlined,
                   color: Colors.grey,
@@ -384,40 +297,20 @@ class _BodyState extends State<Body> {
                 height: 50,
                 child: Center(child: Text("Sign In"))),
             onPressed: () {
-              final bool isValide =
+              final bool isValid =
                   EmailValidator.validate(emailController.text.trim());
-              if (!isValide) {
+              if (isValid) {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return dialog("Invalid Email");
-                    });
-              } else if (name.text.isEmpty) {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return dialog("Name Should not empty");
-                    });
-              } else if (Compa_name.text.isEmpty) {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return dialog("Resturant Name Should not Empty");
-                    });
-              } else if (_password.text.length < 8) {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return dialog("Password Should 8 char");
-                    });
-              } else if (_password.text != _rpassword.text) {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return dialog("Password not match");
+                      return dialog("Done");
                     });
               } else {
-                send();
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return dialog("invalid User");
+                    });
               }
             },
             style: ElevatedButton.styleFrom(
@@ -445,48 +338,6 @@ class _BodyState extends State<Body> {
 
 //========================================snackBar===========================================================//
 
-  void _visbalOrNot() {
-    if (ishidepassword == true) {
-      ishidepassword = false;
-    } else {
-      ishidepassword = true;
-    }
-    setState(() {});
-  }
-
-  void _rvisbalOrNot() {
-    if (ishiderpassword == true) {
-      ishiderpassword = false;
-    } else {
-      ishiderpassword = true;
-    }
-    setState(() {});
-  }
-
-  send() async {
-    Map<String, String> data = {
-      "email": emailController.text,
-      "name": name.text,
-      "Comp_Name": Compa_name.text,
-      "password": _password.text,
-    };
-    var res = await netwokHandler.post(data);
-    setState(() {
-      if (res) {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return dialog("User Already Present");
-            });
-      } else {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return dialogsu("User successfully Registered");
-            });
-      }
-    });
-  }
 }
 
 class dialog extends StatelessWidget {
@@ -505,9 +356,8 @@ class dialog extends StatelessWidget {
               child: Container(
                 color: Colors.white,
                 child: Icon(
-                  Icons.sentiment_dissatisfied,
+                  Icons.error,
                   size: 60,
-                  color: Colors.blue,
                 ),
               ),
             ),
@@ -520,65 +370,7 @@ class dialog extends StatelessWidget {
                     child: Column(children: [
                       Text(
                         title,
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 212, 94, 85),
-                            fontSize: 20,
-                            fontWeight: FontWeight.normal),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text("Okay"),
-                      )
-                    ]),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/*scusses---------------------------------------------------*/
-class dialogsu extends StatelessWidget {
-  final title;
-  dialogsu(this.title);
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-      child: Container(
-        width: 400,
-        height: 200,
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(
-                color: Colors.white,
-                child: Icon(
-                  Icons.check,
-                  size: 60,
-                  color: Colors.blue,
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                color: Color.fromARGB(255, 0, 214, 237),
-                child: SizedBox.expand(
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(children: [
-                      Text(
-                        title,
-                        style: TextStyle(color: Colors.green, fontSize: 20),
+                        style: TextStyle(color: Colors.red),
                       ),
                       SizedBox(
                         height: 10,
