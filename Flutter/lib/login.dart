@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:lottie/lottie.dart';
+import 'package:mini_project/forget.dart';
+import 'package:mini_project/home/homes.dart';
 import 'package:mini_project/signup.dart';
-
+import 'package:lottie/lottie.dart';
 import 'customePageRoute.dart';
+import 'package:mini_project/networkhandling/networkhandling.dart';
+
+import 'dialog.dart';
 
 class login extends StatelessWidget {
   @override
@@ -79,7 +83,7 @@ class _MenuState extends State<Menu> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),
       decoration: BoxDecoration(
-        color: Color(0xff4169e1),
+        color: Color.fromARGB(255, 13, 133, 0),
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
@@ -93,9 +97,9 @@ class _MenuState extends State<Menu> {
         cursor: SystemMouseCursors.click,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-              primary: Color(0xff4169e1), elevation: 0),
+              primary: Color.fromARGB(255, 0, 132, 2), elevation: 0),
           child: Text(
-            'Sign upoo',
+            'Sign up',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -121,6 +125,7 @@ class _BodyState extends State<Body> {
   TextEditingController emailController = TextEditingController();
   bool ishidepassword = true;
   TextEditingController _password = TextEditingController();
+  NetwokHandler netwokHandler = NetwokHandler();
 
   void validateEmail() {}
 
@@ -170,7 +175,7 @@ class _BodyState extends State<Body> {
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Colors.blue),
+                            color: Colors.green),
                       ),
                       onPressed: () {
                         Navigator.of(context).push(
@@ -186,9 +191,11 @@ class _BodyState extends State<Body> {
           ),
         ),
         Container(
-          height: 450,
-          width: 400,
-          child: Lottie.asset('assets/images/register.json'),
+          height: 550,
+          width: 450,
+          child: Lottie.asset(
+            'assets/images/login.json',
+          ),
         ),
         Padding(
           padding: EdgeInsets.symmetric(
@@ -211,7 +218,7 @@ class _BodyState extends State<Body> {
             hintText: 'Enter email',
             prefixIcon: Icon(
               Icons.email_outlined,
-              color: Colors.blue,
+              color: Colors.green,
             ),
             filled: true,
             fillColor: Colors.blueGrey[50],
@@ -236,12 +243,19 @@ class _BodyState extends State<Body> {
             hintText: 'Password',
             prefixIcon: Icon(
               Icons.password_outlined,
-              color: Colors.blue,
+              color: Colors.green,
             ),
             suffixIcon: MouseRegion(
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
-                onTap: _visbalOrNot,
+                onTap: (() {
+                  if (ishidepassword == true) {
+                    ishidepassword = false;
+                  } else {
+                    ishidepassword = true;
+                  }
+                  setState(() {});
+                }),
                 child: Icon(
                   Icons.visibility_off_outlined,
                   color: Colors.grey,
@@ -266,19 +280,27 @@ class _BodyState extends State<Body> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             TextButton(
-              child: Text("Forget Password"),
-              onPressed: () => print("done!"),
+              child: Text(
+                "Forget Password",
+                style: TextStyle(color: Colors.green),
+              ),
+              onPressed: () {
+                Navigator.of(context).push(
+                  CustomePageRoute(
+                      child: forget(), direction: AxisDirection.right, time: 1),
+                );
+              },
             ),
           ],
         ),
         SizedBox(height: 40),
         Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Colors.green,
             borderRadius: BorderRadius.circular(30),
             boxShadow: [
               BoxShadow(
-                color: Colors.deepPurple,
+                color: Color.fromARGB(255, 55, 135, 1),
                 spreadRadius: 1,
                 blurRadius: 20,
               ),
@@ -286,112 +308,62 @@ class _BodyState extends State<Body> {
           ),
           child: ElevatedButton(
             child: Container(
+                color: Colors.green,
                 width: double.infinity,
                 height: 50,
                 child: Center(child: Text("Sign In"))),
             onPressed: () {
               final bool isValid =
                   EmailValidator.validate(emailController.text.trim());
-              if (isValid) {
+              if (!isValid) {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return dialog("Done");
+                      return dialog(
+                          "Inalid Email", Icons.sentiment_very_dissatisfied);
+                    });
+              } else if (_password.text.isEmpty) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return dialog("Please Enter Pasword",
+                          Icons.sentiment_very_dissatisfied);
                     });
               } else {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return dialog("invalid User");
-                    });
+                send();
               }
             },
             style: ElevatedButton.styleFrom(
+              primary: Colors.green,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
             ),
           ),
         ),
-        SizedBox(height: 40),
-        Row(children: [
-          Expanded(
-            child: Divider(
-              color: Colors.grey[300],
-              height: 50,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-          ),
-        ]),
       ],
     );
   }
 
 //========================================snackBar===========================================================//
-  void _visbalOrNot() {
-    if (ishidepassword == true) {
-      ishidepassword = false;
-    } else {
-      ishidepassword = true;
-    }
-    setState(() {});
-  }
-
-  //ddld,ld,pld
-
-}
-
-class dialog extends StatelessWidget {
-  final title;
-  dialog(this.title);
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-      child: Container(
-        width: 400,
-        height: 200,
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(
-                color: Colors.white,
-                child: Icon(
-                  Icons.error,
-                  size: 60,
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                color: Color.fromARGB(255, 0, 214, 237),
-                child: SizedBox.expand(
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(children: [
-                      Text(
-                        title,
-                        style: TextStyle(color: Colors.red),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text("Okay"),
-                      )
-                    ]),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+  send() async {
+    Map<String, String> data = {
+      "email": emailController.text,
+      "password": _password.text,
+    };
+    var res = await netwokHandler.login(data);
+    setState(() {
+      if (res) {
+        Navigator.of(context).push(
+          CustomePageRoute(child: MainScreen(), direction: AxisDirection.up),
+        );
+      } else {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return dialog("Invalid User", Icons.sentiment_very_dissatisfied);
+            });
+      }
+    });
   }
 }

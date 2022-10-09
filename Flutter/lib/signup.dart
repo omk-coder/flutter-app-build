@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mini_project/login.dart';
-
 import 'customePageRoute.dart';
+import 'package:mini_project/networkhandling/networkhandling.dart';
+
+import 'dialog.dart';
 
 class signup extends StatelessWidget {
   @override
@@ -119,12 +121,19 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   TextEditingController emailController = TextEditingController();
+  NetwokHandler netwokHandler = NetwokHandler();
+
   bool ishidepassword = true;
   bool ishiderpassword = true;
   TextEditingController _password = TextEditingController();
   TextEditingController _rpassword = TextEditingController();
   TextEditingController name = TextEditingController();
   TextEditingController Compa_name = TextEditingController();
+
+  var email = "";
+  var Name = "";
+  var Cname = "";
+  var Password = "";
 
   @override
   Widget build(BuildContext context) {
@@ -349,15 +358,6 @@ class _BodyState extends State<Body> {
             ),
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            TextButton(
-              child: Text("Forget Password"),
-              onPressed: () => print("done!"),
-            ),
-          ],
-        ),
         SizedBox(height: 40),
         Container(
           decoration: BoxDecoration(
@@ -383,38 +383,39 @@ class _BodyState extends State<Body> {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return dialog("Invalid Email");
-                    });
-              } else if (_password.text.length < 8) {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return dialog("Password Should 8 char");
-                    });
-              } else if (_password.text != _rpassword.text) {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return dialog("Password not match");
+                      return dialog(
+                          "Invalid Email", Icons.sentiment_very_dissatisfied);
                     });
               } else if (name.text.isEmpty) {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return dialog("Name Should not empty");
+                      return dialog("Name Should not empty",
+                          Icons.sentiment_very_dissatisfied);
                     });
               } else if (Compa_name.text.isEmpty) {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return dialog("Password Should 8 char");
+                      return dialog("Resturant Name Should not Empty",
+                          Icons.sentiment_very_dissatisfied);
                     });
-              } else {
+              } else if (_password.text.length < 8) {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return dialog("invalid ");
+                      return dialog("Password Should 8 char",
+                          Icons.sentiment_very_dissatisfied);
                     });
+              } else if (_password.text != _rpassword.text) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return dialog("Password not match",
+                          Icons.sentiment_very_dissatisfied);
+                    });
+              } else {
+                send();
               }
             },
             style: ElevatedButton.styleFrom(
@@ -459,59 +460,30 @@ class _BodyState extends State<Body> {
     }
     setState(() {});
   }
-}
 
-class dialog extends StatelessWidget {
-  final title;
-
-  dialog(this.title);
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-      child: Container(
-        width: 400,
-        height: 200,
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(
-                color: Colors.white,
-                child: Icon(
-                  Icons.sentiment_very_dissatisfied,
-                  size: 60,
-                  color: Colors.blue,
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                color: Color.fromARGB(255, 0, 214, 237),
-                child: SizedBox.expand(
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(children: [
-                      Text(
-                        title,
-                        style: TextStyle(color: Colors.red),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text("Okay"),
-                      )
-                    ]),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+  send() async {
+    Map<String, String> data = {
+      "email": emailController.text,
+      "name": name.text,
+      "Comp_Name": Compa_name.text,
+      "password": _password.text,
+    };
+    var res = await netwokHandler.post(data);
+    setState(() {
+      if (res) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return dialog(
+                  "User Already Present", Icons.sentiment_very_dissatisfied);
+            });
+      } else {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return dialog("User successfully Registered", Icons.check_circle);
+            });
+      }
+    });
   }
 }
