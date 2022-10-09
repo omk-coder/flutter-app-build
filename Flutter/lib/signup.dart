@@ -5,6 +5,8 @@ import 'package:mini_project/login.dart';
 import 'customePageRoute.dart';
 import 'package:mini_project/networkhandling/networkhandling.dart';
 
+import 'dialog.dart';
+
 class signup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -356,15 +358,6 @@ class _BodyState extends State<Body> {
             ),
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            TextButton(
-              child: Text("Forget Password"),
-              onPressed: () => print("done!"),
-            ),
-          ],
-        ),
         SizedBox(height: 40),
         Container(
           decoration: BoxDecoration(
@@ -390,31 +383,36 @@ class _BodyState extends State<Body> {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return dialog("Invalid Email");
+                      return dialog(
+                          "Invalid Email", Icons.sentiment_very_dissatisfied);
                     });
               } else if (name.text.isEmpty) {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return dialog("Name Should not empty");
+                      return dialog("Name Should not empty",
+                          Icons.sentiment_very_dissatisfied);
                     });
               } else if (Compa_name.text.isEmpty) {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return dialog("Resturant Name Should not Empty");
+                      return dialog("Resturant Name Should not Empty",
+                          Icons.sentiment_very_dissatisfied);
                     });
               } else if (_password.text.length < 8) {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return dialog("Password Should 8 char");
+                      return dialog("Password Should 8 char",
+                          Icons.sentiment_very_dissatisfied);
                     });
               } else if (_password.text != _rpassword.text) {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return dialog("Password not match");
+                      return dialog("Password not match",
+                          Icons.sentiment_very_dissatisfied);
                     });
               } else {
                 send();
@@ -476,127 +474,16 @@ class _BodyState extends State<Body> {
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              return dialog("User Already Present");
+              return dialog(
+                  "User Already Present", Icons.sentiment_very_dissatisfied);
             });
       } else {
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              return dialogsu("User successfully Registered");
+              return dialog("User successfully Registered", Icons.check_circle);
             });
       }
     });
-  }
-}
-
-class dialog extends StatelessWidget {
-  final title;
-  dialog(this.title);
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-      child: Container(
-        width: 400,
-        height: 200,
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(
-                color: Colors.white,
-                child: Icon(
-                  Icons.sentiment_dissatisfied,
-                  size: 60,
-                  color: Colors.blue,
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                color: Color.fromARGB(255, 0, 214, 237),
-                child: SizedBox.expand(
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(children: [
-                      Text(
-                        title,
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 212, 94, 85),
-                            fontSize: 20,
-                            fontWeight: FontWeight.normal),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text("Okay"),
-                      )
-                    ]),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/*scusses---------------------------------------------------*/
-class dialogsu extends StatelessWidget {
-  final title;
-  dialogsu(this.title);
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-      child: Container(
-        width: 400,
-        height: 200,
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(
-                color: Colors.white,
-                child: Icon(
-                  Icons.check,
-                  size: 60,
-                  color: Colors.blue,
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                color: Color.fromARGB(255, 0, 214, 237),
-                child: SizedBox.expand(
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(children: [
-                      Text(
-                        title,
-                        style: TextStyle(color: Colors.green, fontSize: 20),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text("Okay"),
-                      )
-                    ]),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }

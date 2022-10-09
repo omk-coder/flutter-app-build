@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:lottie/lottie.dart';
-import 'package:mini_project/home.dart';
+import 'package:mini_project/forget.dart';
+import 'package:mini_project/home/homes.dart';
 import 'package:mini_project/signup.dart';
+import 'package:lottie/lottie.dart';
 import 'customePageRoute.dart';
 import 'package:mini_project/networkhandling/networkhandling.dart';
+
+import 'dialog.dart';
 
 class login extends StatelessWidget {
   @override
@@ -80,7 +83,7 @@ class _MenuState extends State<Menu> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),
       decoration: BoxDecoration(
-        color: Color(0xff4169e1),
+        color: Color.fromARGB(255, 13, 133, 0),
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
@@ -94,7 +97,7 @@ class _MenuState extends State<Menu> {
         cursor: SystemMouseCursors.click,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-              primary: Color(0xff4169e1), elevation: 0),
+              primary: Color.fromARGB(255, 0, 132, 2), elevation: 0),
           child: Text(
             'Sign up',
             style: TextStyle(
@@ -172,7 +175,7 @@ class _BodyState extends State<Body> {
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Colors.blue),
+                            color: Colors.green),
                       ),
                       onPressed: () {
                         Navigator.of(context).push(
@@ -188,9 +191,11 @@ class _BodyState extends State<Body> {
           ),
         ),
         Container(
-          height: 450,
-          width: 400,
-          child: Lottie.asset('assets/images/register.json'),
+          height: 550,
+          width: 450,
+          child: Lottie.asset(
+            'assets/images/login.json',
+          ),
         ),
         Padding(
           padding: EdgeInsets.symmetric(
@@ -213,7 +218,7 @@ class _BodyState extends State<Body> {
             hintText: 'Enter email',
             prefixIcon: Icon(
               Icons.email_outlined,
-              color: Colors.blue,
+              color: Colors.green,
             ),
             filled: true,
             fillColor: Colors.blueGrey[50],
@@ -238,7 +243,7 @@ class _BodyState extends State<Body> {
             hintText: 'Password',
             prefixIcon: Icon(
               Icons.password_outlined,
-              color: Colors.blue,
+              color: Colors.green,
             ),
             suffixIcon: MouseRegion(
               cursor: SystemMouseCursors.click,
@@ -275,11 +280,14 @@ class _BodyState extends State<Body> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             TextButton(
-              child: Text("Forget Password"),
+              child: Text(
+                "Forget Password",
+                style: TextStyle(color: Colors.green),
+              ),
               onPressed: () {
                 Navigator.of(context).push(
                   CustomePageRoute(
-                      child: signup(), direction: AxisDirection.right),
+                      child: forget(), direction: AxisDirection.right, time: 1),
                 );
               },
             ),
@@ -288,11 +296,11 @@ class _BodyState extends State<Body> {
         SizedBox(height: 40),
         Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Colors.green,
             borderRadius: BorderRadius.circular(30),
             boxShadow: [
               BoxShadow(
-                color: Colors.deepPurple,
+                color: Color.fromARGB(255, 55, 135, 1),
                 spreadRadius: 1,
                 blurRadius: 20,
               ),
@@ -300,6 +308,7 @@ class _BodyState extends State<Body> {
           ),
           child: ElevatedButton(
             child: Container(
+                color: Colors.green,
                 width: double.infinity,
                 height: 50,
                 child: Center(child: Text("Sign In"))),
@@ -310,37 +319,28 @@ class _BodyState extends State<Body> {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return dialog("Inalid Email");
+                      return dialog(
+                          "Inalid Email", Icons.sentiment_very_dissatisfied);
                     });
               } else if (_password.text.isEmpty) {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return dialog("Please Enter Pasword");
+                      return dialog("Please Enter Pasword",
+                          Icons.sentiment_very_dissatisfied);
                     });
               } else {
                 send();
               }
             },
             style: ElevatedButton.styleFrom(
+              primary: Colors.green,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
             ),
           ),
         ),
-        SizedBox(height: 40),
-        Row(children: [
-          Expanded(
-            child: Divider(
-              color: Colors.grey[300],
-              height: 50,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-          ),
-        ]),
       ],
     );
   }
@@ -355,13 +355,13 @@ class _BodyState extends State<Body> {
     setState(() {
       if (res) {
         Navigator.of(context).push(
-          CustomePageRoute(child: home(), direction: AxisDirection.up),
+          CustomePageRoute(child: MainScreen(), direction: AxisDirection.up),
         );
       } else {
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              return dialog("Invalid User");
+              return dialog("Invalid User", Icons.sentiment_very_dissatisfied);
             });
       }
     });

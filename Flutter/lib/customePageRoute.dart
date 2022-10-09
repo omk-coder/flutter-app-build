@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 class CustomePageRoute extends PageRouteBuilder {
   final Widget child;
   final AxisDirection direction;
+  final time;
 
   CustomePageRoute({
     required this.child,
     this.direction = AxisDirection.right,
+    this.time,
   }) : super(
-          transitionDuration: Duration(seconds: 1),
-          reverseTransitionDuration: Duration(seconds: 1),
+          transitionDuration: Duration(seconds: time),
+          reverseTransitionDuration: Duration(seconds: time),
           pageBuilder: (context, animation, secondaryAnimation) => child,
         );
 
