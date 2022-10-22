@@ -1,5 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:mini_project/Component/ordermodel.dart';
+import 'package:mini_project/Component/test.dart';
 import 'package:mini_project/home/order.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:http/http.dart' as http;
 
 class Downcard extends StatefulWidget {
   const Downcard({
@@ -11,58 +17,13 @@ class Downcard extends StatefulWidget {
 }
 
 class _DowncardState extends State<Downcard> {
-  Widget bodydata() => DataTable(
-        columns: <DataColumn>[
-          DataColumn(
-            label: Text(
-              "Customer_Id",
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey),
-            ),
-            numeric: false,
-          ),
-          DataColumn(
-            label: Text(
-              "Customer_Name",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.grey,
-              ),
-            ),
-            numeric: false,
-          ),
-          DataColumn(
-            label: Text(
-              "Food",
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey),
-            ),
-            numeric: false,
-          ),
-          DataColumn(
-            label: Text(
-              "Status",
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey),
-            ),
-          )
-        ],
-        rows: order
-            .map((order) => DataRow(cells: [
-                  DataCell(Text(order.Customer_Id)),
-                  DataCell(Text(order.Customer_Name)),
-                  DataCell(Text(order.Food)),
-                  DataCell(Text(order.Status)),
-                ]))
-            .toList(),
-      );
+  List<SaleData> data1 = [
+    SaleData('Jan', 12),
+    SaleData('Feb', 22),
+    SaleData('Mar', 30),
+    SaleData('Apr', 20),
+    SaleData('May', 35)
+  ];
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -92,7 +53,7 @@ class _DowncardState extends State<Downcard> {
                   child: ListView(
                     children: [
                       Container(
-                        child: bodydata(),
+                        child: Myapp(),
                       ),
                     ],
                   ),
@@ -125,8 +86,28 @@ class _DowncardState extends State<Downcard> {
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  height: 200,
-                  child: Text('heyy'),
+                  height: 440,
+                  width: 650,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                    child: SfCartesianChart(
+                      primaryXAxis: CategoryAxis(),
+                      title: ChartTitle(text: ''),
+                      legend: Legend(
+                        isVisible: true,
+                      ),
+                      tooltipBehavior: TooltipBehavior(enable: true),
+                      series: <ChartSeries<SaleData, String>>[
+                        LineSeries<SaleData, String>(
+                          dataSource: data1,
+                          xValueMapper: (SaleData sales, _) => sales.month,
+                          yValueMapper: (SaleData sales, _) => sales.sale,
+                          name: 'Sales',
+                          dataLabelSettings: DataLabelSettings(isVisible: true),
+                        ),
+                      ],
+                    ),
+                  ),
                 )
               ],
             ),
@@ -312,3 +293,10 @@ var order = <Order_short>[
       Food: "ice-Cream",
       Status: "Deliver"),
 ];
+
+class SaleData {
+  final String month;
+  final double sale;
+
+  SaleData(this.month, this.sale);
+}

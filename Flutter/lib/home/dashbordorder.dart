@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Component/headerCard.dart';
 import '../Component/headerTop.dart';
-import 'downCardOrder.dart';
+import '../Component/downCardOrder.dart';
 
 class DashboardorderScreen extends StatelessWidget {
   const DashboardorderScreen({super.key});

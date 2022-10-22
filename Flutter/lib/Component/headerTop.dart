@@ -1,16 +1,41 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-class Header extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+class Header extends StatefulWidget {
   const Header({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<Header> createState() => _HeaderState();
+}
+
+class _HeaderState extends State<Header> {
+  @override
   Widget build(BuildContext context) {
+    List<OrderData> getlist = [];
+
+    late Map data;
+    late List orderData;
+
+    Future<List<topname>> getdata() async {
+      final Response = await http.get(Uri.parse('http://localhost:3000/userd'));
+      var data = json.decode(Response.body.toString());
+
+      setState(() {
+        orderData = data['orderData'];
+      });
+
+      debugPrint(orderData.toString());
+      return data;
+    }
+
     return Row(
       children: [
         Text(
-          'Dashboard',
+          "dashboard",
           style: Theme.of(context).textTheme.headline6,
         ),
         Spacer(
@@ -22,6 +47,45 @@ class Header extends StatelessWidget {
         ProfileCard(),
       ],
     );
+  }
+}
+
+class topname {
+  List<OrderData>? orderData;
+
+  topname({this.orderData});
+
+  topname.fromJson(Map<String, dynamic> json) {
+    if (json['orderData'] != null) {
+      orderData = <OrderData>[];
+      json['orderData'].forEach((v) {
+        orderData!.add(new OrderData.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.orderData != null) {
+      data['orderData'] = this.orderData!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class OrderData {
+  String? name;
+
+  OrderData({this.name});
+
+  OrderData.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    return data;
   }
 }
 
@@ -95,3 +159,8 @@ class ProfileCard extends StatelessWidget {
     );
   }
 }
+
+
+
+//backed
+

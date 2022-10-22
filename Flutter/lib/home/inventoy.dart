@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mini_project/Component/SideMenu.dart';
 
+import '../Component/inventoryDashbord.dart';
+
 class invet extends StatelessWidget {
   const invet({super.key});
 
@@ -19,7 +21,7 @@ class invet extends StatelessWidget {
               flex: 6,
               child: Container(
                 height: 1000,
-                child: Lottie.asset('assets/images/update.json'),
+                child: inventoryDashboard(),
                 color: Color(0xffe1e6e1),
               ),
             )
