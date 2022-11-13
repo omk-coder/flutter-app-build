@@ -15,23 +15,6 @@ class Header extends StatefulWidget {
 class _HeaderState extends State<Header> {
   @override
   Widget build(BuildContext context) {
-    List<OrderData> getlist = [];
-
-    late Map data;
-    late List orderData;
-
-    Future<List<topname>> getdata() async {
-      final Response = await http.get(Uri.parse('http://localhost:3000/userd'));
-      var data = json.decode(Response.body.toString());
-
-      setState(() {
-        orderData = data['orderData'];
-      });
-
-      debugPrint(orderData.toString());
-      return data;
-    }
-
     return Row(
       children: [
         Text(
@@ -47,45 +30,6 @@ class _HeaderState extends State<Header> {
         ProfileCard(),
       ],
     );
-  }
-}
-
-class topname {
-  List<OrderData>? orderData;
-
-  topname({this.orderData});
-
-  topname.fromJson(Map<String, dynamic> json) {
-    if (json['orderData'] != null) {
-      orderData = <OrderData>[];
-      json['orderData'].forEach((v) {
-        orderData!.add(new OrderData.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.orderData != null) {
-      data['orderData'] = this.orderData!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class OrderData {
-  String? name;
-
-  OrderData({this.name});
-
-  OrderData.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    return data;
   }
 }
 
@@ -129,10 +73,39 @@ class SearchField extends StatelessWidget {
   }
 }
 
-class ProfileCard extends StatelessWidget {
+class ProfileCard extends StatefulWidget {
   const ProfileCard({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<ProfileCard> createState() => _ProfileCardState();
+}
+
+class _ProfileCardState extends State<ProfileCard> {
+  List<OrderData> getlist = [];
+
+  late Map data;
+
+  List? orderData;
+
+  Future<List<OrderData>> getdata() async {
+    final Response = await http.get(Uri.parse('http://localhost:3000/rev'));
+    var data = json.decode(Response.body.toString());
+
+    setState(() {
+      orderData = data['orderData'];
+    });
+
+    debugPrint(orderData.toString());
+    return data;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -149,18 +122,93 @@ class ProfileCard extends StatelessWidget {
             "assets/images/facebook.png",
             height: 38,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0 / 2),
-            child: Text("Shahid"),
+          Container(
+            width: 60,
+            height: 20,
+            child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0 / 2),
+                child: Text("Shahid")),
           ),
-          Icon(Icons.keyboard_arrow_down)
+          Icon(Icons.keyboard_arrow_down),
         ],
       ),
     );
   }
 }
 
-
-
 //backed
+class review {
+  List<OrderData>? orderData;
 
+  review({this.orderData});
+
+  review.fromJson(Map<String, dynamic> json) {
+    if (json['orderData'] != null) {
+      orderData = <OrderData>[];
+      json['orderData'].forEach((v) {
+        orderData!.add(new OrderData.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.orderData != null) {
+      data['orderData'] = this.orderData!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class OrderData {
+  String? sId;
+  String? userId;
+  String? username;
+  String? rate;
+  String? foodName;
+  String? source;
+  String? image;
+  String? review;
+  String? date;
+  int? iV;
+
+  OrderData(
+      {this.sId,
+      this.userId,
+      this.username,
+      this.rate,
+      this.foodName,
+      this.source,
+      this.image,
+      this.review,
+      this.date,
+      this.iV});
+
+  OrderData.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    userId = json['user_id'];
+    username = json['username'];
+    rate = json['rate'];
+    foodName = json['food_name'];
+    source = json['source'];
+    image = json['image'];
+    review = json['review'];
+    date = json['date'];
+    iV = json['__v'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['user_id'] = this.userId;
+    data['username'] = this.username;
+    data['rate'] = this.rate;
+    data['food_name'] = this.foodName;
+    data['source'] = this.source;
+    data['image'] = this.image;
+    data['review'] = this.review;
+    data['date'] = this.date;
+    data['__v'] = this.iV;
+    return data;
+  }
+}

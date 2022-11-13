@@ -5,16 +5,16 @@ import 'package:mini_project/Component/headerTop.dart';
 import 'package:mini_project/dialog.dart';
 import 'package:mini_project/networkhandling/networkhandling.dart';
 
-class Dashbordinventory extends StatefulWidget {
-  const Dashbordinventory({
+class Dashbordshort extends StatefulWidget {
+  const Dashbordshort({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<Dashbordinventory> createState() => _DashbordinventoryState();
+  State<Dashbordshort> createState() => _DashbordshortState();
 }
 
-class _DashbordinventoryState extends State<Dashbordinventory> {
+class _DashbordshortState extends State<Dashbordshort> {
   NetwokHandler netwokHandler = NetwokHandler();
   late TextEditingController idcontroler;
 
@@ -122,6 +122,7 @@ class _DashbordinventoryState extends State<Dashbordinventory> {
                 orderHeading("Item_name"),
                 orderHeading("Last_Purchase"),
                 orderHeading("Avl_Stock"),
+                orderHeading("Action"),
               ],
             ),
             const SizedBox(
@@ -156,6 +157,20 @@ class _DashbordinventoryState extends State<Dashbordinventory> {
                         Expanded(
                             child: Text("${orderData[index]["avl_stock"]}",
                                 textAlign: TextAlign.center)),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              ElevatedButton(
+                                  onPressed: (() {
+                                    setState(() {
+                                      delteinv(
+                                          orderData[index]["id"].toString());
+                                    });
+                                  }),
+                                  child: Icon(Icons.delete)),
+                            ],
+                          ),
+                        )
                       ],
                     );
                   }),

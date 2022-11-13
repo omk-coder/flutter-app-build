@@ -141,7 +141,7 @@ class _BodyState extends State<Body> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Sign In to \nMy Application',
+                'Sign In to \n AGREE+',
                 style: TextStyle(
                   fontSize: 45,
                   fontWeight: FontWeight.bold,

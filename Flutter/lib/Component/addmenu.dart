@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mini_project/networkhandling/networkhandling.dart';
 
+import '../dialog.dart';
+
 class menudialog extends StatefulWidget {
   @override
   State<menudialog> createState() => _menudialogState();
@@ -14,6 +16,10 @@ class _menudialogState extends State<menudialog> {
   TextEditingController Food_Price = TextEditingController();
 
   TextEditingController Food_Code = TextEditingController();
+
+  var food_name = "";
+  var food_price = "";
+  var food_code = "";
 
   @override
   Widget build(BuildContext context) {
@@ -65,17 +71,8 @@ class _menudialogState extends State<menudialog> {
                       borderRadius: BorderRadius.circular(10)),
                   padding: EdgeInsets.all(20)),
               onPressed: () async {
-                Map<String, String> data = {
-                  "food_code": Food_Code.text,
-                  "food_name": Food_Name.text,
-                  "food_price": Food_Price.text,
-                };
-                var res = await postservice.postmenu(data);
-                if (res) {
-                  print("ok");
-                } else {
-                  print("not ok");
-                }
+                sendMenu();
+
                 Navigator.of(context).pop();
               },
               child: Text("Submit"),
@@ -84,5 +81,30 @@ class _menudialogState extends State<menudialog> {
         ),
       ),
     );
+  }
+
+  sendMenu() async {
+    Map<String, String> data = {
+      "food_id": Food_Code.text,
+      "food_name": Food_Name.text,
+      "food_price": Food_Price.text,
+    };
+    var res = await postservice.postmenu(data);
+    setState(() {
+      if (!res) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return dialog("Menu Added", Icons.check_circle);
+            });
+      } else {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return dialog(
+                  "food alredy present", Icons.sentiment_very_dissatisfied);
+            });
+      }
+    });
   }
 }

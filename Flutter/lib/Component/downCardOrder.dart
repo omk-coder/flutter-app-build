@@ -59,6 +59,7 @@ class _DashbordOrderDownState extends State<DashbordOrderDown> {
       ]),
       width: 1500,
       height: 480,
+      
       margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
       padding: EdgeInsets.all(9),
       child: Column(
@@ -71,7 +72,7 @@ class _DashbordOrderDownState extends State<DashbordOrderDown> {
               orderHeading("Date"),
               orderHeading("Status"),
               orderHeading("Source"),
-              orderHeading("Recept"),
+              orderHeading("price"),
             ],
           ),
           const SizedBox(
@@ -110,8 +111,11 @@ class _DashbordOrderDownState extends State<DashbordOrderDown> {
                           child: Text("${orderData[index]["status"]}",
                               textAlign: TextAlign.center)),
                       Expanded(
-                          child: Text("Swiggy", textAlign: TextAlign.center)),
-                      Expanded(child: Text("PDF", textAlign: TextAlign.center)),
+                          child: Text("${orderData[index]["source"]}",
+                              textAlign: TextAlign.center)),
+                      Expanded(
+                          child: Text("${orderData[index]["price"]}",
+                              textAlign: TextAlign.center)),
                     ],
                   );
                 }),
@@ -130,12 +134,12 @@ Expanded orderHeading(String text) => Expanded(
       ),
     );
 
-class orderdata {
+class orederData {
   List<OrderData>? orderData;
 
-  orderdata({this.orderData});
+  orederData({this.orderData});
 
-  orderdata.fromJson(Map<String, dynamic> json) {
+  orederData.fromJson(Map<String, dynamic> json) {
     if (json['orderData'] != null) {
       orderData = <OrderData>[];
       json['orderData'].forEach((v) {
@@ -159,8 +163,10 @@ class OrderData {
   String? customerName;
   String? food;
   String? status;
+  int? price;
   String? date;
   int? iV;
+  String? source;
 
   OrderData(
       {this.sId,
@@ -168,8 +174,10 @@ class OrderData {
       this.customerName,
       this.food,
       this.status,
+      this.price,
       this.date,
-      this.iV});
+      this.iV,
+      this.source});
 
   OrderData.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -177,8 +185,10 @@ class OrderData {
     customerName = json['customer_name'];
     food = json['food'];
     status = json['status'];
+    price = json['price'];
     date = json['date'];
     iV = json['__v'];
+    source = json['source'];
   }
 
   Map<String, dynamic> toJson() {
@@ -188,8 +198,10 @@ class OrderData {
     data['customer_name'] = this.customerName;
     data['food'] = this.food;
     data['status'] = this.status;
+    data['price'] = this.price;
     data['date'] = this.date;
     data['__v'] = this.iV;
+    data['source'] = this.source;
     return data;
   }
 }

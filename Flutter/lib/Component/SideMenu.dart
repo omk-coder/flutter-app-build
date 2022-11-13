@@ -6,6 +6,7 @@ import 'package:mini_project/home/dashboard.dart';
 import 'package:mini_project/home/homes.dart';
 import 'package:mini_project/home/inventoy.dart';
 import 'package:mini_project/home/menu.dart';
+import 'package:mini_project/home/shortlist.dart';
 import 'package:mini_project/home/order.dart';
 import 'package:mini_project/login.dart';
 
@@ -62,8 +63,19 @@ class SideMenu extends StatelessWidget {
             ),
             DrawerListTile(
               icon: Icons.filter_alt,
-              title: "Report",
+              title: "Short List",
               press: () {
+                Navigator.of(context).push(CustomePageRoute(
+                    child: shortlist(),
+                    direction: AxisDirection.right,
+                    time: 0));
+              },
+            ),
+            DrawerListTile(
+              icon: Icons.comment,
+              title: "Review",
+              press: () {
+                
                 Navigator.of(context).push(CustomePageRoute(
                     child: filter(), direction: AxisDirection.right, time: 0));
               },
