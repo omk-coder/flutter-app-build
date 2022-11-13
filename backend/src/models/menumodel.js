@@ -1,27 +1,23 @@
 const mongoose = require("mongoose");
 const schema = mongoose.Schema;
-const bcrypt = require("bcryptjs");
+
 
 
 const newSchema = new schema({
-    name: {
+    food_id: {
         type: String,
         require: true,
-
     },
-    email: {
+    food_name: {
         type: String,
         require: true,
-        unique: true,
     },
-    password: {
+    food_price: {
         type: String,
         require: true,
-
     },
-    Comp_Name: {
+    image: {
         type: String,
-        require: true,
     },
     date: {
         type: Date,
@@ -31,6 +27,7 @@ const newSchema = new schema({
 
 
 
+
 //collection
-const Register = mongoose.model('Resturant_Detail', newSchema);
+const Register = mongoose.model('Menu_Stores_', newSchema);
 module.exports = Register;

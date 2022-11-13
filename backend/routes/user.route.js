@@ -1,9 +1,11 @@
 const express = require('express')
 const User = require('../src/models/usermodel')
+const Order = require('../src/models/ordermodel')
 const router = express.Router()
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const config = require('config')
+
 
 router.post('/signup', (req, res) => {
     User.findOne({ email: req.body.email }, (err, user) => {
@@ -43,6 +45,11 @@ router.post('/signup', (req, res) => {
 
 
 
+
+
+
+
+
 router.post('/signin', (req, res) => {
     User.findOne({ email: req.body.email, password: req.body.password }, (err, user) => {
         if (err) return res.status(500).json({ msg: err });
@@ -50,7 +57,6 @@ router.post('/signin', (req, res) => {
             return res.status(403).json({ message: "Invalid User" });
         }
         if (user.password === req.body.password) {
-
             return res.status(200).json({
                 message: "Login ScussesFully",
             });
@@ -59,6 +65,25 @@ router.post('/signin', (req, res) => {
             return res.status(404);
         }
     })
+});
+
+router.get('/userd', (req, res, next) => {
+    User.find().then(result => {
+        res.status(200).json({
+            orderData: result
+        });
+    }).catch(err => {
+        console.log(err);
+        res.status.json({
+            error: err
+        });
+    })
 })
+
+
+
+
+
+
 
 module.exports = router
