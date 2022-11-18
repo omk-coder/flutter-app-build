@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mini_project/home/dashboard.dart';
 import 'package:mini_project/home/dashbordorder.dart';
-import 'package:mini_project/home/downCardOrder.dart';
+import 'package:mini_project/Component/downCardOrder.dart';
 
 import '../Component/SideMenu.dart';
 

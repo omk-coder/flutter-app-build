@@ -107,7 +107,8 @@ class _MenuState extends State<Menu> {
           ),
           onPressed: () {
             Navigator.of(context).push(
-              CustomePageRoute(child: signup(), direction: AxisDirection.left),
+              CustomePageRoute(
+                  child: signup(), direction: AxisDirection.left, time: 1),
             );
           },
         ),
@@ -140,7 +141,7 @@ class _BodyState extends State<Body> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Sign In to \nMy Application',
+                'Sign In to \n AGREE+',
                 style: TextStyle(
                   fontSize: 45,
                   fontWeight: FontWeight.bold,
@@ -180,7 +181,9 @@ class _BodyState extends State<Body> {
                       onPressed: () {
                         Navigator.of(context).push(
                           CustomePageRoute(
-                              child: signup(), direction: AxisDirection.down),
+                              child: signup(),
+                              direction: AxisDirection.down,
+                              time: 1),
                         );
                       },
                     ),
@@ -355,7 +358,11 @@ class _BodyState extends State<Body> {
     setState(() {
       if (res) {
         Navigator.of(context).push(
-          CustomePageRoute(child: MainScreen(), direction: AxisDirection.up),
+          CustomePageRoute(
+            child: MainScreen(),
+            direction: AxisDirection.up,
+            time: 1,
+          ),
         );
       } else {
         showDialog(

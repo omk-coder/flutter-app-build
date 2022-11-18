@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
-import 'package:mini_project/Component/SideMenu.dart';
+import 'package:mini_project/home/dashboard.dart';
+import 'package:mini_project/home/dashbordmenu.dart';
+import 'package:mini_project/home/dashbordorder.dart';
+import 'package:mini_project/Component/downCardOrder.dart';
 
-class menu extends StatelessWidget {
+import '../Component/SideMenu.dart';
+
+class menu extends StatefulWidget {
   const menu({super.key});
 
   @override
+  State<menu> createState() => _menuState();
+}
+
+class _menuState extends State<menu> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xffe1e6e1),
       body: SafeArea(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -18,8 +28,7 @@ class menu extends StatelessWidget {
             Expanded(
               flex: 6,
               child: Container(
-                height: 1000,
-                child: Lottie.asset('assets/images/update.json'),
+                child: DashboardMenuScreen(),
                 color: Color(0xffe1e6e1),
               ),
             )

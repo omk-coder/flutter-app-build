@@ -18,13 +18,13 @@ class dialog extends StatelessWidget {
                 child: Icon(
                   icon,
                   size: 60,
-                  color: Colors.blue,
+                  color: Color(0xff00b694),
                 ),
               ),
             ),
             Expanded(
               child: Container(
-                color: Color.fromARGB(255, 0, 214, 237),
+                color: Color(0xff26a6be),
                 child: SizedBox.expand(
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),

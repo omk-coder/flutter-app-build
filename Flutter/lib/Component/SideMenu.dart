@@ -1,12 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:mini_project/Component/headerCard.dart';
 import 'package:mini_project/home/dashboard.dart';
 import 'package:mini_project/home/homes.dart';
 import 'package:mini_project/home/inventoy.dart';
 import 'package:mini_project/home/menu.dart';
+import 'package:mini_project/home/shortlist.dart';
 import 'package:mini_project/home/order.dart';
+import 'package:mini_project/login.dart';
 
 import '../customePageRoute.dart';
+import '../filter.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({
@@ -56,6 +61,25 @@ class SideMenu extends StatelessWidget {
                     child: menu(), direction: AxisDirection.right, time: 0));
               },
             ),
+            DrawerListTile(
+              icon: Icons.filter_alt,
+              title: "Short List",
+              press: () {
+                Navigator.of(context).push(CustomePageRoute(
+                    child: shortlist(),
+                    direction: AxisDirection.right,
+                    time: 0));
+              },
+            ),
+            DrawerListTile(
+              icon: Icons.comment,
+              title: "Review",
+              press: () {
+                
+                Navigator.of(context).push(CustomePageRoute(
+                    child: filter(), direction: AxisDirection.right, time: 0));
+              },
+            ),
             SizedBox(
               height: 300,
             ),
@@ -69,7 +93,12 @@ class SideMenu extends StatelessWidget {
                 DrawerListTile(
                   icon: Icons.logout,
                   title: "Sign out",
-                  press: () {},
+                  press: () {
+                    Navigator.of(context).push(CustomePageRoute(
+                        child: login(),
+                        direction: AxisDirection.right,
+                        time: 0));
+                  },
                 ),
               ]),
             )
@@ -121,11 +150,13 @@ class ProfileAvatar extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             Material(
-              color: Colors.blue,
+              color: Colors.green,
               shape: CircleBorder(),
               child: Container(
                 padding: EdgeInsets.all(5),
                 child: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                      'https://images.trvl-media.com/hotels/6000000/5230000/5222100/5222076/045fe4a4_z.jpg'),
                   radius: 50,
                 ),
               ),

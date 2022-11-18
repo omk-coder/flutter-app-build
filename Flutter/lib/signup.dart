@@ -81,7 +81,7 @@ class _MenuState extends State<Menu> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),
       decoration: BoxDecoration(
-        color: Color(0xff4169e1),
+        color: Color.fromRGBO(76, 175, 80, 1),
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
@@ -95,7 +95,7 @@ class _MenuState extends State<Menu> {
         cursor: SystemMouseCursors.click,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-              primary: Color(0xff4169e1), elevation: 0),
+              primary: Color.fromARGB(75, 76, 158, 88), elevation: 0),
           child: Text(
             'Sign In',
             style: TextStyle(
@@ -105,7 +105,8 @@ class _MenuState extends State<Menu> {
           ),
           onPressed: () {
             Navigator.of(context).push(
-              CustomePageRoute(child: login(), direction: AxisDirection.right),
+              CustomePageRoute(
+                  child: login(), direction: AxisDirection.right, time: 1),
             );
           },
         ),
@@ -147,7 +148,7 @@ class _BodyState extends State<Body> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Sign up to \nMy Application',
+                'Sign up to \n AGREE+',
                 style: TextStyle(
                   fontSize: 45,
                   fontWeight: FontWeight.bold,
@@ -182,12 +183,14 @@ class _BodyState extends State<Body> {
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Colors.blue),
+                            color: Colors.green),
                       ),
                       onPressed: () {
                         Navigator.of(context).push(
                           CustomePageRoute(
-                              child: login(), direction: AxisDirection.up),
+                              child: login(),
+                              direction: AxisDirection.up,
+                              time: 1),
                         );
                       },
                     ),
@@ -200,7 +203,7 @@ class _BodyState extends State<Body> {
         Container(
           height: 450,
           width: 400,
-          child: Lottie.asset('assets/images/register.json'),
+          child: Lottie.asset('assets/images/login.json'),
         ),
         Padding(
           padding: EdgeInsets.symmetric(
@@ -223,7 +226,7 @@ class _BodyState extends State<Body> {
             hintText: 'Enter email',
             prefixIcon: Icon(
               Icons.email_outlined,
-              color: Colors.blue,
+              color: Colors.green,
             ),
             filled: true,
             fillColor: Colors.blueGrey[50],
@@ -249,7 +252,7 @@ class _BodyState extends State<Body> {
             hintText: 'Enter Your Name',
             prefixIcon: Icon(
               Icons.person,
-              color: Colors.blue,
+              color: Colors.green,
             ),
             filled: true,
             fillColor: Colors.blueGrey[50],
@@ -272,7 +275,7 @@ class _BodyState extends State<Body> {
             hintText: 'Enter Restaurant Name',
             prefixIcon: Icon(
               Icons.business,
-              color: Colors.blue,
+              color: Colors.green,
             ),
             filled: true,
             fillColor: Colors.blueGrey[50],
@@ -296,7 +299,7 @@ class _BodyState extends State<Body> {
             hintText: 'Password',
             prefixIcon: Icon(
               Icons.password_outlined,
-              color: Colors.blue,
+              color: Colors.green,
             ),
             suffixIcon: MouseRegion(
               cursor: SystemMouseCursors.click,
@@ -329,10 +332,10 @@ class _BodyState extends State<Body> {
           controller: _rpassword,
           obscureText: ishiderpassword,
           decoration: InputDecoration(
-            hintText: 'Conform Password',
+            hintText: 'Confirm Password',
             prefixIcon: Icon(
               Icons.password_outlined,
-              color: Colors.blue,
+              color: Colors.green,
             ),
             suffixIcon: MouseRegion(
               cursor: SystemMouseCursors.click,
@@ -365,7 +368,7 @@ class _BodyState extends State<Body> {
             borderRadius: BorderRadius.circular(30),
             boxShadow: [
               BoxShadow(
-                color: Colors.deepPurple,
+                color: Color.fromARGB(255, 9, 104, 12),
                 spreadRadius: 1,
                 blurRadius: 20,
               ),
@@ -419,6 +422,7 @@ class _BodyState extends State<Body> {
               }
             },
             style: ElevatedButton.styleFrom(
+              primary: Colors.green,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
